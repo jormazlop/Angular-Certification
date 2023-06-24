@@ -1,0 +1,12 @@
+<div class="filter-container">
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Select a category</option>
+    <option *ngFor="let cat of categories$ | async" value="cat.id">{{cat.name}}</option>
+  </select>
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Select difficulty</option>
+    <option value="1">Easy</option>
+    <option value="2">Medium</option>
+    <option value="3">Hard</option>
+  </select>
+</div>
