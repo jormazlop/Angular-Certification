@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriesService } from '../services/categories.service';
+import { FilterService } from '../services/filter.service';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/category.model';
+import { Filter } from 'src/app/shared/models/filter.model';
 
 @Component({
   selector: 'app-filter',
@@ -10,11 +11,17 @@ import { Category } from 'src/app/shared/models/category.model';
 })
 export class FilterComponent implements OnInit {
 
-  constructor(private categoriesService: CategoriesService) {}
+  filter: Filter = new Filter();
 
   categories$?: Observable<Category[]>;
 
+  constructor(private filterService: FilterService) {}
+
   ngOnInit(): void {
-    this.categories$ =  this.categoriesService.getCategories();
+    this.categories$ = this.filterService.getCategories();
+  }
+
+  onCreate(): void {
+    this.filterService.setFilter(this.filter);
   }
 }

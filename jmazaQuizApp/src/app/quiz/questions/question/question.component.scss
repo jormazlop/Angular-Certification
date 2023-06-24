@@ -1,0 +1,12 @@
+.question-container {
+
+  .question-title {
+    text-align: center;
+  }
+
+  .question-responses {
+    display: flex;
+    gap: 50px;
+    justify-content: space-evenly;
+  }
+}

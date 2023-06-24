@@ -1,0 +1,8 @@
+<div class="question-container">
+  <p class="question-title">{{ question.question | replaceQuote }}</p>
+  <div class="question-responses">
+    <ng-container *ngFor="let answer of answerList">
+      <button type="button" class="btn btn-outline-success">{{ answer | replaceQuote }}</button>
+    </ng-container>
+  </div>
+</div>
