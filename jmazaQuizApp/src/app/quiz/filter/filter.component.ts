@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FilterService } from '../services/filter.service';
+import { FilterService } from '../../shared/services/filter.service';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/category.model';
 import { Filter } from 'src/app/shared/models/filter.model';
@@ -23,5 +23,9 @@ export class FilterComponent implements OnInit {
 
   onCreate(): void {
     this.filterService.setFilter(this.filter);
+  }
+
+  isCreationDisabled(): boolean {
+    return this.filter.category == 0 || this.filter.difficulty == 'none';
   }
 }

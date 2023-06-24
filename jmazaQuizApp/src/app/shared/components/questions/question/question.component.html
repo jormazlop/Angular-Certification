@@ -1,0 +1,16 @@
+<div class="question-container">
+  <p class="question-title">{{ question.question | replaceQuote }}</p>
+  <div class="question-responses">
+    <ng-container *ngFor="let answer of answerList">
+      <button answerHighlight
+              [selected]="answer === selectedAnswer"
+              [correctAnswer]="isAnswerCorrect(answer)"
+              [newQuestions]="newQuestions"
+              type="button"
+              class="btn btn-outline-success"
+              (click)="onClickAnswer(answer)">
+              {{ answer | replaceQuote }}
+      </button>
+    </ng-container>
+  </div>
+</div>

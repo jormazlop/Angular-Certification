@@ -1,0 +1,16 @@
+<div class="question-container">
+  <ng-container *ngIf="!loadingQuestion; else spinnerTemplate">
+    <ng-container *ngFor="let question of questionList; index as i">
+      <app-question [question]="question"
+                    (onUpdateAnswer)="updateAnswers({id: i, answer: $event})"
+                    [answer]="answerList.answerList[i]"
+                    [newQuestions]="newQuestions"/>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #spinnerTemplate>
+  <div class="spinner-border" role="status"></div>
+</ng-template>
+
+

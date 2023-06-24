@@ -1,2 +1,7 @@
 <app-filter />
-<app-questions />
+<app-questions [newQuestions]="true"/>
+<button *ngIf="!submitDisabled"
+        class="btn btn-secondary"
+        (click)="submitAnswers()">
+        Submit
+</button>
