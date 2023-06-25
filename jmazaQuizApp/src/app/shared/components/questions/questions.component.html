@@ -2,9 +2,9 @@
   <ng-container *ngIf="!loadingQuestion; else spinnerTemplate">
     <ng-container *ngFor="let question of questionList; index as i">
       <app-question [question]="question"
-                    (onUpdateAnswer)="updateAnswers({id: i, answer: $event})"
+                    (onUpdateAnswer)="updateAnswers($event)"
                     [answer]="answerList.answerList[i]"
-                    [newQuestions]="newQuestions"/>
+                    [section]="section"/>
     </ng-container>
   </ng-container>
 </div>

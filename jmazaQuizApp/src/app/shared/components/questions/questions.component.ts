@@ -15,12 +15,11 @@ import { Answer, AnswerList } from '../../models/answer.model';
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
 
+  @Input() section = '';
   filterSubscription = new Subscription();
   questionList: Question[] = [];
   answerList: AnswerList = new AnswerList();
   loadingQuestion = false;
-
-  @Input() newQuestions = false;
 
   constructor(
     private filterService: FilterService,
@@ -28,18 +27,17 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
-    if (this.newQuestions) {
+    if (this.section === 'quiz') {
       this.filterSubscription = this.filterService.getFilter().subscribe((newFilter: Filter) => {
         this.refreshQuestions(newFilter);
       });
     } else {
       this.questionList = this.questionsService.getQuestions();
-    }
+    };
 
     this.questionsService.answerList$.subscribe(answerList => {
       this.answerList = answerList;
-    })
+    });
   }
 
   refreshQuestions(filter: Filter): void {

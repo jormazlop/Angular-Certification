@@ -1,2 +1,7 @@
 <h2 class="results-title">RESULTS</h2>
-<app-questions />
+<app-questions [section]="'results'"/>
+<p [style.backgroundColor] = "getColorNote()">You scored {{ finalNote }} out of 5</p>
+<button class="btn btn-secondary"
+        (click)="onCreateNewQuiz()">
+        Create a New quiz
+</button>

@@ -15,7 +15,11 @@ export class QuizComponent {
 
   questionSubscription?: Subscription;
 
-  constructor(private questionService: QuestionsService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private questionService: QuestionsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.questionSubscription = this.questionService.getAnswerList().subscribe((answerList: AnswerList) => {

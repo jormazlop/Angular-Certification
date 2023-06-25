@@ -34,6 +34,12 @@ export class QuestionsService {
     return this.questionList;
   }
 
+  initializeQuestions(): void {
+    this.questionList = [];
+    this.answerList = new AnswerList();
+    this.answerList$.next(this.answerList);
+  }
+
   getAnswerList(): Observable<AnswerList> {
     return this.answerList$.asObservable();
   }
@@ -41,6 +47,12 @@ export class QuestionsService {
   updateAnswerList(answer: Answer): void {
     this.answerList.answerList[answer.id] = answer;
     this.answerList$.next(this.answerList);
+  }
+
+  getFinalNote(): number {
+    const correctAnswers = this.questionList.map(question => question.correct_answer);
+    const answers = this.answerList.answerList.map(answer => answer.answer);
+    return answers.filter(a => correctAnswers.includes(a)).length;
   }
 
 }

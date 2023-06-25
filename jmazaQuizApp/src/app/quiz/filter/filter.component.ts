@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FilterService } from '../../shared/services/filter.service';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/category.model';
@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit {
   constructor(private filterService: FilterService) {}
 
   ngOnInit(): void {
+    this.filterService.setFilter(new Filter());
     this.categories$ = this.filterService.getCategories();
   }
 

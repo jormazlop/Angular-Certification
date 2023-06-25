@@ -4,17 +4,24 @@ export class AnswerList {
 
   constructor() {
     this.answerList = [
-      {id: 0, answer: ''},
-      {id: 1, answer: ''},
-      {id: 2, answer: ''},
-      {id: 3, answer: ''},
-      {id: 4, answer: ''},
+      {id: 0, answer: '', answersList: []},
+      {id: 1, answer: '', answersList: []},
+      {id: 2, answer: '', answersList: []},
+      {id: 3, answer: '', answersList: []},
+      {id: 4, answer: '', answersList: []},
     ];
   }
 }
 
 
-export interface Answer {
+export class Answer {
   id: number;
   answer: string;
+  answersList: string[];
+
+  constructor() {
+    this.id = 0;
+    this.answer = '';
+    this.answersList = [];
+  }
 }

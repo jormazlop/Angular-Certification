@@ -11,20 +11,17 @@ export class QuestionComponent implements OnInit {
 
   @Input({required: true}) question: Question = new Question();
 
-  @Input({required: true}) answer?: Answer;
+  @Input({required: true}) answer: Answer = new Answer();
 
-  @Input() newQuestions = false;
+  @Input({required: true}) section = '';
 
-  @Output() onUpdateAnswer = new EventEmitter<string>();
-
-  answerList: string[] = [];
-
-  selectedAnswer = '';
+  @Output() onUpdateAnswer = new EventEmitter<Answer>();
 
   ngOnInit(): void {
-    this.answerList = [...this.question.incorrect_answers, this.question.correct_answer]
-    this.answerList = this.answerList.sort((a, b) => 0.5 - Math.random());
-    this.selectedAnswer = this.answer!.answer;
+    if(this.section == 'quiz') {
+      this.answer.answersList = [...this.question.incorrect_answers, this.question.correct_answer]
+      this.answer.answersList =  this.answer.answersList.sort((a, b) => 0.5 - Math.random());
+    }
   }
 
   isAnswerCorrect(answer: string): boolean {
@@ -32,7 +29,7 @@ export class QuestionComponent implements OnInit {
   }
 
   onClickAnswer(answer: string): void {
-    this.selectedAnswer = this.selectedAnswer === answer ? '' : answer;
-    this.onUpdateAnswer.emit(this.selectedAnswer);
+    this.answer.answer = this.answer.answer === answer ? '' : answer;
+    this.onUpdateAnswer.emit(this.answer);
   }
 }
