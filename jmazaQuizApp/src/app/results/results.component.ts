@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { QuestionsService } from '../shared/services/questions.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,6 +16,11 @@ export class ResultsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState() {
+    this.questionsService.initializeQuestions();
+  }
 
   getScoreColor(): string {
     if (this.finalNote < 2) {
