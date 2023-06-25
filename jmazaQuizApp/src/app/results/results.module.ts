@@ -4,8 +4,6 @@ import { ResultsComponent } from './results.component';
 import { ResultsRoutingModule } from './results-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-
-
 @NgModule({
   declarations: [
     ResultsComponent
@@ -16,4 +14,4 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule
   ]
 })
-export class ResultsModule { }
+export class ResultsModule {}

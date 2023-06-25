@@ -10,16 +10,13 @@ import { Answer, AnswerList } from '../models/answer.model';
 })
 export class QuestionsService {
 
-  answerList = new AnswerList();
-
+  private answerList = new AnswerList();
   answerList$ = new BehaviorSubject<AnswerList>(this.answerList);
-
-  questionList: Question[] = [];
+  private questionList: Question[] = [];
 
   constructor(private http: HttpClient) {}
 
   generateNewQuestions(filter: Filter): Observable<Question[]> {
-
     const url = `https://opentdb.com/api.php?amount=5&category=${filter.category}&difficulty=${filter.difficulty}&type=multiple`;
 
     return this.http.get<QuestionAPI>(url).pipe(
@@ -28,6 +25,16 @@ export class QuestionsService {
         return res.results;
       })
     );
+  }
+
+  getAnswerList(): Observable<AnswerList> {
+    return this.answerList$.asObservable();
+  }
+
+  getFinalNote(): number {
+    const correctAnswers = this.questionList.map(question => question.correct_answer);
+    const answers = this.answerList.answerList.map(answer => answer.answer);
+    return answers.filter(a => correctAnswers.includes(a)).length;
   }
 
   getQuestions(): Question[] {
@@ -40,19 +47,9 @@ export class QuestionsService {
     this.answerList$.next(this.answerList);
   }
 
-  getAnswerList(): Observable<AnswerList> {
-    return this.answerList$.asObservable();
-  }
-
   updateAnswerList(answer: Answer): void {
     this.answerList.answerList[answer.id] = answer;
     this.answerList$.next(this.answerList);
-  }
-
-  getFinalNote(): number {
-    const correctAnswers = this.questionList.map(question => question.correct_answer);
-    const answers = this.answerList.answerList.map(answer => answer.answer);
-    return answers.filter(a => correctAnswers.includes(a)).length;
   }
 
 }

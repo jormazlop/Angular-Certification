@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class QuotePipe implements PipeTransform {
 
   transform(question: string): unknown {
-
     const clearQuote = question.replace(/&amp;/g, '&')
                                .replace(/&lt;/g, '<')
                                .replace(/&gt;/g, '>')

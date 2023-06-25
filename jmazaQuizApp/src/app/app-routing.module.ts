@@ -5,7 +5,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/quiz', pathMatch: 'full' },
   { path: 'quiz', loadChildren: () => import('./quiz/quiz.module').then(m => m.QuizModule) },
   { path: 'results', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule) },
-  { path: '**', redirectTo: '/quiz', pathMatch: 'full' },
+  { path: '**', redirectTo: '/quiz' },
 ];
 
 @NgModule({

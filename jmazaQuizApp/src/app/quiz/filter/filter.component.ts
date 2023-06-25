@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FilterService } from '../../shared/services/filter.service';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/category.model';
@@ -11,11 +11,14 @@ import { Filter } from 'src/app/shared/models/filter.model';
 })
 export class FilterComponent implements OnInit {
 
+  categories$?: Observable<Category[]>;
   filter: Filter = new Filter();
 
-  categories$?: Observable<Category[]>;
-
   constructor(private filterService: FilterService) {}
+
+  isCreationDisabled(): boolean {
+    return this.filter.category == 0 || this.filter.difficulty == 'none';
+  }
 
   ngOnInit(): void {
     this.filterService.setFilter(new Filter());
@@ -24,9 +27,5 @@ export class FilterComponent implements OnInit {
 
   onCreate(): void {
     this.filterService.setFilter(this.filter);
-  }
-
-  isCreationDisabled(): boolean {
-    return this.filter.category == 0 || this.filter.difficulty == 'none';
   }
 }

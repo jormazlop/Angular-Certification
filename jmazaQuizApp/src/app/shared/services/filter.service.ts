@@ -9,7 +9,7 @@ import { Filter } from 'src/app/shared/models/filter.model';
 })
 export class FilterService {
 
-  filter = new BehaviorSubject<Filter>(new Filter());
+  private filter = new BehaviorSubject<Filter>(new Filter());
   private url = 'https://opentdb.com/api_category.php';
 
   constructor(private http: HttpClient) { }
@@ -22,11 +22,11 @@ export class FilterService {
     );
   }
 
-  setFilter(filter: Filter): void {
-    this.filter.next(filter);
-  }
-
   getFilter(): Observable<Filter> {
     return this.filter.asObservable();
+  }
+
+  setFilter(filter: Filter): void {
+    this.filter.next(filter);
   }
 }

@@ -1,17 +1,29 @@
 import { Directive, HostBinding, OnInit, Input, OnChanges } from '@angular/core';
 
 @Directive({
-  selector: '[answerHighlight]'
+  selector: '[highlight]'
 })
 export class HighlightDirective implements OnChanges, OnInit {
 
+  @Input() correctAnswer = false;
   @Input() selected = false;
   @Input() section = 'quiz';
-  @Input() correctAnswer = false;
 
   @HostBinding('style.background-color') background = '';
   @HostBinding('style.color') color = '';
   @HostBinding('style.pointer-events') pointerEvents = 'auto';
+
+  ngOnChanges(): void {
+    if(this.section === 'quiz') {
+      if (this.selected) {
+        this.background = '#198754';
+        this.color = '#fff';
+      } else {
+        this.background = '';
+        this.color = '';
+      }
+    }
+  }
 
   ngOnInit(): void {
     if(this.section === 'results') {
@@ -30,19 +42,6 @@ export class HighlightDirective implements OnChanges, OnInit {
         this.color = '';
       }
     }
-  }
-
-  ngOnChanges(): void {
-    if(this.section === 'quiz') {
-      if (this.selected) {
-        this.background = '#198754';
-        this.color = '#fff';
-      } else {
-        this.background = '';
-        this.color = '';
-      }
-    }
-
   }
 
 }

@@ -12,27 +12,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class QuizComponent {
 
   submitDisabled = true;
-
-  questionSubscription?: Subscription;
+  subscriptions: Subscription[] = [];
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private questionService: QuestionsService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.questionSubscription = this.questionService.getAnswerList().subscribe((answerList: AnswerList) => {
-      this.submitDisabled = !!answerList.answerList.find(answer => answer.answer == '');
-    })
+    this.subscriptions.push(
+      this.questionService.getAnswerList().subscribe((answerList: AnswerList) => {
+        this.submitDisabled = answerList.answerList.some(answer => answer.answer == '');
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.map(s => s.unsubscribe);
   }
 
   submitAnswers(): void {
     this.router.navigate(['../results'], {relativeTo: this.activatedRoute});
-  }
-
-  ngOnDestroy(): void {
-    this.questionSubscription?.unsubscribe();
   }
 
 }

@@ -15,22 +15,34 @@ import { Answer, AnswerList } from '../../models/answer.model';
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
 
-  @Input() section = '';
-  filterSubscription = new Subscription();
-  questionList: Question[] = [];
   answerList: AnswerList = new AnswerList();
   loadingQuestion = false;
+  questionList: Question[] = [];
+  @Input() section = '';
+  subscriptions: Subscription[] = [];
 
   constructor(
     private filterService: FilterService,
     private questionsService: QuestionsService
   ) {}
 
+  private refreshQuestions(filter: Filter): void {
+    this.loadingQuestion = true;
+    this.subscriptions.push(
+      this.questionsService.generateNewQuestions(filter).subscribe((questionList: Question[]) => {
+        this.loadingQuestion = false;
+        this.questionList = questionList;
+      })
+    )
+  }
+
   ngOnInit(): void {
     if (this.section === 'quiz') {
-      this.filterSubscription = this.filterService.getFilter().subscribe((newFilter: Filter) => {
-        this.refreshQuestions(newFilter);
-      });
+      this.subscriptions.push(
+        this.filterService.getFilter().subscribe((newFilter: Filter) => {
+          this.refreshQuestions(newFilter);
+        })
+      );
     } else {
       this.questionList = this.questionsService.getQuestions();
     };
@@ -40,19 +52,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  refreshQuestions(filter: Filter): void {
-    this.loadingQuestion = true;
-    this.questionsService.generateNewQuestions(filter).subscribe((questionList: Question[]) => {
-      this.loadingQuestion = false;
-      this.questionList = questionList;
-    })
+  ngOnDestroy(): void {
+    this.subscriptions.map(s => s.unsubscribe);
   }
 
   updateAnswers(answer: Answer): void {
     this.questionsService.updateAnswerList(answer);
-  }
-
-  ngOnDestroy(): void {
-    this.filterSubscription.unsubscribe();
   }
 }

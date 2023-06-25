@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ResultsComponent implements OnInit {
 
-
   finalNote = 0;
 
   constructor(
@@ -18,16 +17,7 @@ export class ResultsComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.finalNote = this.questionsService.getFinalNote();
-  }
-
-  onCreateNewQuiz(): void {
-    this.questionsService.initializeQuestions();
-    this.router.navigate(['../quiz'], {relativeTo: this.activatedRoute});
-  }
-
-  getColorNote(): string {
+  getScoreColor(): string {
     if (this.finalNote < 2) {
       return 'red';
     } else if (this.finalNote < 4) {
@@ -35,5 +25,14 @@ export class ResultsComponent implements OnInit {
     } else {
       return 'green';
     }
+  }
+
+  ngOnInit(): void {
+    this.finalNote = this.questionsService.getFinalNote();
+  }
+
+  onCreateNewQuiz(): void {
+    this.questionsService.initializeQuestions();
+    this.router.navigate(['../quiz'], {relativeTo: this.activatedRoute});
   }
 }
