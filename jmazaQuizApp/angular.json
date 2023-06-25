@@ -28,7 +28,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "_redirects.netlify"
+              "src/_redirects.netlify"
             ],
 
             "styles": [
