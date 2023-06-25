@@ -5,8 +5,6 @@ import { QuestionComponent } from './components/questions/question/question.comp
 import { QuotePipe } from './pipes/quote.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 
-
-
 @NgModule({
   declarations: [
     QuestionsComponent,

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Subscription, skip } from 'rxjs';
 import { Filter } from 'src/app/shared/models/filter.model';
 
 import { Question } from 'src/app/shared/models/question.model';
@@ -40,7 +40,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     if (this.section === 'quiz') {
       this.subscriptions.push(
         this.filterService.getFilter().subscribe((newFilter: Filter) => {
-          this.refreshQuestions(newFilter);
+          if (newFilter.category != 0 && newFilter.difficulty != 'none') {
+            this.refreshQuestions(newFilter);
+          }
         })
       );
     } else {
