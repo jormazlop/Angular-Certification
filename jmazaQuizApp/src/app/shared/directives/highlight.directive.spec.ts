@@ -4,12 +4,14 @@ import { HighlightDirective } from "./highlight.directive";
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { QuotePipe } from "../pipes/quote.pipe";
 import { Answer } from "../models/answer.model";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-let fixture: ComponentFixture<QuestionComponent>
+let fixture: ComponentFixture<QuestionComponent>;
 let component: QuestionComponent;
 
 beforeEach(() => {
   TestBed.configureTestingModule({
+    imports: [HttpClientTestingModule],
     declarations: [ HighlightDirective, QuestionComponent, QuotePipe ]
   });
 
@@ -23,6 +25,7 @@ beforeEach(() => {
   // initial binding
   fixture.detectChanges();
 });
+
 
 describe('TestDirective', () => {
 
